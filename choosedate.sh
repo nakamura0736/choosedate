@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# 20200512 中村
+# 日付を指定するかどうか確認
 PS3="日付を指定しますか？"
 select VAR in yes no
 do
@@ -12,12 +12,22 @@ do
   fi
 done
 
+# 開始日付/終了日付を入力 20200512 中村
 if [ "$CHOOSEDATE" == "yes" ]; then
-  read -p "開始日付をyyyy/mm/ddで入力してください:" STARTDATE
-  echo ""
-  echo "開始日付: $STARTDATE"
+  read -p "開始日付をyyyy/mm/ddで入力してください:" firstdate
+  echo "開始日付: $firstdate"
 
-  read -p "終了日付をyyyy/mm/ddで入力してください:" ENDDATE
-  echo ""
-  echo "終了日付: $ENDDATE"
+  read -p "終了日付をyyyy/mm/ddで入力してください:" seconddate
+  echo "終了日付: $seconddate"
+
+# 日付の順番がおかしい場合、若い日付をSTARTDATEとする。
+  firstnum=`date -d "$firstdate" '+%s'`
+  secondnum=`date -d "$seconddate" '+%s'`
+  if [[ $firstnum -gt $secondnum ]]; then
+    STARTDATE=$seconddate
+    ENDDATE=$firstdate
+  else
+    STARTDATE=$firstdate
+    ENDDATE=$seconddate
+  fi
 fi
