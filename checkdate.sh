@@ -6,13 +6,8 @@ function checkdate()
   start=`date -d "$2" '+%s'`
   end=`date -d "$3" '+%s'`
 
-#  if ( [[ $date -ge $start ]] -a [[ $date -le $end ]] ); then
-  if [[ $date -ge $start ]]; then
-    if [[ $date -le $end ]]; then
-      echo "true"
-    else
-      echo "false"
-    fi
+  if  [[ $date -ge $start && $date -le $end ]]; then
+    echo "true"
   else
     echo "false"
   fi
